@@ -1,4 +1,4 @@
-namespace JinsMeme.Shard.MemePackets;
+namespace JinsMeme.Shared.MemePackets;
 
 public class CurrentData
 {

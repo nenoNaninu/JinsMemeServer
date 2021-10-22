@@ -1,0 +1,52 @@
+﻿@page "/memelogger"
+
+@using System.Text;
+@using Microsoft.AspNetCore.SignalR.Client;
+@using JinsMeme.Shared.Hubs;
+@using JinsMeme.Blazor.Services;
+
+@inject NavigationManager NavigationManager
+@implements IAsyncDisposable
+
+<h3>MemeLogger</h3>
+
+<ul>
+    @for(int i = _messages.Count -1; 0 <= i ; i--)
+    {
+        <li>@_messages[i]</li>
+    }
+</ul>
+
+@code {
+    private List<string> _messages = new();
+    private HubConnection? _hubConnection = default;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var hubConnection = new HubConnectionBuilder()
+            .WithUrl("https://localhost:5001/MemeHub")
+            .Build();
+
+        hubConnection.On<byte[]>(nameof(IReceiver.ReceiveMessageAsync), x =>
+        {
+            _messages.Add(Encoding.UTF8.GetString(x));
+            StateHasChanged();
+        });
+
+        //var instance = new Receiver2(_messages);
+        //hubConnection.Register<IReceiver>(instance);
+
+        await hubConnection.StartAsync();
+
+        _hubConnection = hubConnection;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_hubConnection is not null)
+        {
+            await _hubConnection.DisposeAsync();
+        }
+    }
+
+}

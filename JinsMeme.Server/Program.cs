@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
-using System.Text.Json;
 using JinsMeme.Shared.Hubs;
 using JinsMemeShard.Hubs;
 using JinsMemeShard.Services;
@@ -16,19 +15,28 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<MessagePool>();
 builder.Services.AddSignalR();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+           .AllowAnyHeader()
+           .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 //app.UseHttpsRedirection();
 
+app.UseCors();
 app.UseAuthorization();
 
 app.UseWebSockets();
 app.MapControllers();
 app.MapHub<MemeHub>(MemeHub.Path);
-
-
 
 app.Map("/", async (HttpContext httpContext, IHubContext<MemeHub, IReceiver> hubContext) =>
 {

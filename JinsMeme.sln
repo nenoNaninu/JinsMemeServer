@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JinsMeme.Server", "JinsMeme
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JinsMeme.Shared", "JinsMeme.Shared\JinsMeme.Shared.csproj", "{BF95171F-4DD6-49D4-AAEC-A38CDA0EEB18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JinsMeme.Blazor", "JinsMeme.Blazor\JinsMeme.Blazor.csproj", "{C7E5A9D9-CD21-442F-B44F-810EB66D3508}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JinsMeme.Blazor", "JinsMeme.Blazor\JinsMeme.Blazor.csproj", "{C7E5A9D9-CD21-442F-B44F-810EB66D3508}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JinsMeme.Console", "JinsMeme.Console\JinsMeme.Console.csproj", "{38F02193-59F8-4C47-B0BE-A474CDB8FFAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JinsMeme.Console", "JinsMeme.Console\JinsMeme.Console.csproj", "{38F02193-59F8-4C47-B0BE-A474CDB8FFAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.SignalR;
 using JinsMeme.Shared.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace JinsMemeShard.Hubs;
 
