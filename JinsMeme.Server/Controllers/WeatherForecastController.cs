@@ -1,4 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace JinsMemeShard.Controllers;
 [ApiController]
@@ -15,6 +21,12 @@ public class WeatherForecastController : ControllerBase
     public WeatherForecastController(ILogger<WeatherForecastController> logger)
     {
         _logger = logger;
+    }
+
+    public async Task<ActionResult<int>> Hoge()
+    {
+        await Task.Delay(1);
+        return 0;
     }
 
     [HttpGet]

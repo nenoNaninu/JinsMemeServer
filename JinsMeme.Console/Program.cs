@@ -14,8 +14,11 @@ var connection = new HubConnectionBuilder()
 
 connection.Register<IReceiver>(new Receiver());
 await connection.StartAsync();
+Console.WriteLine("Started");
 
 await Exit.WaitAsync();
+
+Console.ReadLine();
 
 Console.WriteLine("End");
 
@@ -36,7 +39,7 @@ public static class Exit
         var tcs = new TaskCompletionSource();
         Console.CancelKeyPress += (sender, e) =>
         {
-            e.Cancel = true;
+            //e.Cancel = true;
             tcs.SetResult();
         };
         return tcs.Task;

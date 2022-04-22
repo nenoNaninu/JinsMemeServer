@@ -1,3 +1,5 @@
+using System;
+
 namespace JinsMemeShard.Services;
 
 public class WebSocketMemoryPool

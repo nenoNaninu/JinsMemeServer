@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.SignalR.Client;
 @using JinsMeme.Shared.Hubs;
 @using JinsMeme.Blazor.Services;
+@using TypedSignalR.Client;
 
 @inject NavigationManager NavigationManager
 @implements IAsyncDisposable
@@ -11,7 +12,7 @@
 <h3>MemeLogger</h3>
 
 <ul>
-    @for(int i = _messages.Count -1; 0 <= i ; i--)
+    @for(int i = _messages.Count - 1; 0 <= i ; i--)
     {
         <li>@_messages[i]</li>
     }
@@ -20,6 +21,7 @@
 @code {
     private List<string> _messages = new();
     private HubConnection? _hubConnection = default;
+    private IDisposable? _disposable;
 
     protected override async Task OnInitializedAsync()
     {
@@ -27,14 +29,10 @@
             .WithUrl("https://localhost:5001/MemeHub")
             .Build();
 
-        hubConnection.On<byte[]>(nameof(IReceiver.ReceiveMessageAsync), x =>
-        {
-            _messages.Add(Encoding.UTF8.GetString(x));
-            StateHasChanged();
-        });
+        var instance = new MemeReceiver(_messages);
+        _disposable = instance.Subscribe(_ => this.StateHasChanged());
 
-        //var instance = new Receiver2(_messages);
-        //hubConnection.Register<IReceiver>(instance);
+        hubConnection.Register<IReceiver>(instance);
 
         await hubConnection.StartAsync();
 
@@ -43,10 +41,11 @@
 
     public async ValueTask DisposeAsync()
     {
+        _disposable?.Dispose();
+
         if (_hubConnection is not null)
         {
             await _hubConnection.DisposeAsync();
         }
     }
-
 }
